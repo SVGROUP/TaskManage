@@ -1,0 +1,22 @@
+# TaskManage 服务配置文件
+# 优先级：环境变量 > 本文件 > 内置默认
+
+# 服务端口（最终通过 docker 映射，可在此或用环境变量 PORT 覆盖）
+port: 50010
+
+# SQLite 库文件所在目录（calendar.db / gantt.db）
+# 也可用环境变量 DATA_DIR 覆盖
+data_dir: "./data"
+
+# 日历提醒扫描
+reminder:
+  enabled: true
+  # cron 表达式，默认每分钟扫描一次
+  scan_cron: "* * * * *"
+
+# 全天任务的提醒基准时刻（HH:MM）；也可用环境变量 ALL_DAY_REMIND_BASE 覆盖
+all_day_remind_base: "09:00"
+
+# 说明：
+# - ServerChan sendkey 不在此配置，而是登录后在日历页「设置 sendkey」，
+#   或用 scripts/user_add.py --module calendar sendkey <user> <key> 写入 calendar.db。

@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>日历待办</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="calendar/style.css?v=28" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="left">
+      <button id="prev">‹</button>
+      <button id="today">今天</button>
+      <button id="next">›</button>
+      <h1 id="title">—</h1>
+    </div>
+    <!-- 第二组：视图切换 + 字体切换 + 设置 -->
+    <div class="right-row-2">
+      <div class="view-switch" role="tablist">
+        <button data-view="month" class="active">月</button>
+        <button data-view="week">周</button>
+        <button data-view="day">日</button>
+      </div>
+      <div class="font-switch" role="tablist" aria-label="字体大小">
+        <button data-font="small">小</button>
+        <button data-font="medium" class="active">中</button>
+        <button data-font="large">大</button>
+      </div>
+      <button id="settings">⚙ 设置</button>
+      <span id="hidden-indicator" class="hidden-indicator" hidden>已隐藏 <span id="hidden-count">0</span> 个标签</span>
+    </div>
+    <!-- 第三组：登录态 + 账户/登录/登出 + 编辑模式 + 新建 -->
+    <div class="right-row-3">
+      <span id="auth-status" class="auth-status"></span>
+      <button id="account-btn" hidden>账户</button>
+      <button id="login-btn">登录</button>
+      <button id="logout-btn" hidden>登出</button>
+      <button id="edit-mode-toggle" class="ghost">编辑模式</button>
+      <button id="new-task" class="primary">新建任务</button>
+    </div>
+  </header>
+
+  <main id="view-root"></main>
+
+  <!-- 新建/编辑任务弹窗 -->
+  <dialog id="task-dialog">
+    <form method="dialog" id="task-form">
+      <h3 id="dlg-title">新建任务</h3>
+      <input type="hidden" name="id" />
+      <label>标题<input name="title" required maxlength="200" autocomplete="off" /></label>
+      <label>备注<textarea name="notes" rows="3" maxlength="2000"></textarea></label>
+      <div class="row">
+        <label>开始日期<input type="date" name="start_date" required /></label>
+        <label>结束日期<input type="date" name="end_date" /></label>
+        <label class="time-field" data-time>开始时间<input type="time" name="start_time" step="300" /></label>
+        <label class="time-field" data-time>结束时间<input type="time" name="end_time" step="300" /></label>
+      </div>
+      <p class="hint">结束日期留空：不循环=仅当天，周循环=1年，年循环=30年。</p>
+      
+      <div class="row">
+        <label>重复模式
+          <select name="repeat_type">
+            <option value="none">不循环</option>
+            <option value="weekly">每周</option>
+            <option value="yearly">每年</option>
+          </select>
+        </label>
+        <label id="visibility-row">可见性
+          <select name="visibility">
+            <option value="public">公共（所有人可见）</option>
+            <option value="private">私人（仅自己可见）</option>
+          </select>
+        </label>
+      </div>
+      
+      <div id="repeat-days-row" hidden>
+        <p class="hint">选择每周重复的日期：</p>
+        <div class="weekday-checkboxes">
+          <label class="checkbox"><input type="checkbox" name="repeat_day" value="0" /> 一</label>
+          <label class="checkbox"><input type="checkbox" name="repeat_day" value="1" /> 二</label>
+          <label class="checkbox"><input type="checkbox" name="repeat_day" value="2" /> 三</label>
+          <label class="checkbox"><input type="checkbox" name="repeat_day" value="3" /> 四</label>
+          <label class="checkbox"><input type="checkbox" name="repeat_day" value="4" /> 五</label>
+          <label class="checkbox"><input type="checkbox" name="repeat_day" value="5" /> 六</label>
+          <label class="checkbox"><input type="checkbox" name="repeat_day" value="6" /> 日</label>
+        </div>
+      </div>
+
+      <label class="checkbox" id="skip-weekends-row" hidden>
+        <input type="checkbox" name="skip_weekends" /> 跨天时跳过周末
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" name="all_day" checked /> 全天任务
+      </label>
+      <div class="row">
+        <label>标签
+          <select name="tag">
+            <option value="">无标签</option>
+          </select>
+        </label>
+        <label>任务色块
+          <select name="color">
+            <option value="">无色块</option>
+          </select>
+        </label>
+      </div>
+      <div class="remind-block">
+        <p class="hint">提醒（留空即关闭；全天任务以9点为基准计算）：</p>
+        <div class="row">
+          <label><input type="number" name="remind1_offset" min="1" max="10080" placeholder="首次提醒" /></label>
+          <label>
+            <select name="remind1_unit">
+              <option value="minute">分钟前</option>
+              <option value="hour">小时前</option>
+            </select>
+          </label>
+          <label><input type="number" name="remind2_offset" min="1" max="10080" placeholder="二次提醒" /></label>
+          <label>
+            <select name="remind2_unit">
+              <option value="minute">分钟前</option>
+              <option value="hour">小时前</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <label class="checkbox">
+        <input type="checkbox" name="priority" /> 标为重要
+      </label>
+      <menu class="actions">
+        <button value="cancel" class="ghost" formnovalidate>取消</button>
+        <button value="save" class="primary">保存</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- 任务操作弹窗 -->
+  <dialog id="action-dialog">
+    <form method="dialog" id="action-form">
+      <h3 id="action-title">任务</h3>
+      <p id="action-meta" class="meta"></p>
+      <div class="row">
+        <label>目标日期<input type="date" name="target_date" required /></label>
+      </div>
+      <label class="checkbox" title="复制时加入原任务所在批次；独立任务会和复制件组成新批次">
+        <input type="checkbox" name="join_group" /> 复制时加入组
+      </label>
+      <menu class="actions wrap">
+        <button value="cancel" class="ghost" formnovalidate>关闭</button>
+        <button value="toggle" formnovalidate>切换完成</button>
+        <button value="edit" formnovalidate>编辑</button>
+        <button value="delete" class="danger" formnovalidate>删除</button>
+        <button value="copy" class="primary">复制到该日期</button>
+        <button value="move" class="primary">移动到该日期</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- 系列编辑 scope 选择弹窗（仅在编辑跨天批次任务时弹出）-->
+  <dialog id="scope-dialog">
+    <form method="dialog" id="scope-form">
+      <h3>这是一个跨天批次任务</h3>
+      <p id="scope-meta" class="meta"></p>
+      <label class="radio"><input type="radio" name="scope" value="this" checked /> 仅修改此任务</label>
+      <label class="radio" id="scope-future-label"><input type="radio" name="scope" value="future" /> 修改此任务及之后</label>
+      <label class="radio"><input type="radio" name="scope" value="all" /> 修改整个系列</label>
+      <menu class="actions">
+        <button value="cancel" class="ghost" formnovalidate>取消</button>
+        <button value="ok" class="primary">应用</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- 设置弹窗 - 标签管理 -->
+  <dialog id="settings-dialog">
+    <form method="dialog" id="settings-form">
+      <h3>标签颜色设置</h3>
+      <div class="manage-section">
+        <h4>标签管理</h4>
+        <div class="add-color-row">
+          <input type="color" id="new-tag-color" value="#4f46e5" />
+          <input type="text" id="new-tag-name" placeholder="输入新标签名称" maxlength="32" />
+          <button type="button" class="primary small" id="add-tag-btn">添加</button>
+        </div>
+        <div class="tag-list" id="tag-list"></div>
+      </div>
+      <div class="manage-section">
+        <h4>任务色块管理</h4>
+        <div class="add-color-row">
+          <input type="color" id="new-task-color" value="#4f46e5" />
+          <input type="text" id="new-color-name" placeholder="输入色块名称" maxlength="32" />
+          <button type="button" class="primary small" id="add-color-btn">添加</button>
+        </div>
+        <div class="color-list" id="color-list"></div>
+      </div>
+      <menu class="actions">
+        <button value="close" class="primary">关闭</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- 任务详情弹窗 -->
+  <dialog id="task-detail-dialog">
+    <form method="dialog" id="task-detail-form">
+      <h3>任务详情</h3>
+      <div class="task-detail-meta" id="task-detail-meta"></div>
+      <label>标题<input name="title" required maxlength="200" autocomplete="off" /></label>
+      <label>备注<textarea name="notes" rows="3" maxlength="2000"></textarea></label>
+      <div class="row">
+        <label>日期<input type="date" name="date" required /></label>
+        <label>开始时间<input type="time" name="start_time" step="300" /></label>
+        <label>结束时间<input type="time" name="end_time" step="300" /></label>
+      </div>
+      <div class="row">
+        <label>标签
+          <select name="tag">
+            <option value="">无标签</option>
+          </select>
+        </label>
+        <label>任务色块
+          <select name="color">
+            <option value="">无色块</option>
+          </select>
+        </label>
+      </div>
+      <label class="checkbox">
+        <input type="checkbox" name="priority" /> 标为重要
+      </label>
+      <div class="remind-block">
+        <p class="hint">提醒（最多两条，留空即关闭；全天任务以当天 09:00 为基准计算）：</p>
+        <div class="row">
+          <label><input type="number" name="remind1_offset" min="1" max="10080" placeholder="数值" /></label>
+          <label>
+            <select name="remind1_unit">
+              <option value="minute">分钟前</option>
+              <option value="hour">小时前</option>
+            </select>
+          </label>
+          <label><input type="number" name="remind2_offset" min="1" max="10080" placeholder="数值" /></label>
+          <label>
+            <select name="remind2_unit">
+              <option value="minute">分钟前</option>
+              <option value="hour">小时前</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <label class="checkbox">
+        <input type="checkbox" name="done" /> 已完成
+      </label>
+      <menu class="actions">
+        <button value="cancel" class="ghost">取消</button>
+        <button value="delete" class="danger">删除</button>
+        <button value="save" class="primary">保存</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- 登录弹窗 -->
+  <dialog id="login-dialog">
+    <form method="dialog" id="login-form">
+      <h3>登录</h3>
+      <p class="hint">登录后可查看自己的私人任务并编辑任务。未登录只能查看公共任务。</p>
+      <label>用户名<input id="login-username" name="username" required autocomplete="username" /></label>
+      <label>密码<input id="login-password" type="password" name="password" required autocomplete="current-password" /></label>
+      <menu class="actions">
+        <button value="cancel" class="ghost" formnovalidate>取消</button>
+        <button value="login" class="primary">登录</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <!-- 账户弹窗（改密码 / 设 sendkey）-->
+  <dialog id="account-dialog">
+    <form method="dialog" id="account-form">
+      <h3>账户设置</h3>
+      <p class="meta" id="account-meta"></p>
+      <fieldset>
+        <legend>修改密码</legend>
+        <label>当前密码<input type="password" name="old_password" autocomplete="current-password" /></label>
+        <label>新密码（至少6位）<input type="password" name="new_password" autocomplete="new-password" /></label>
+        <button type="button" id="change-pw-btn" class="primary small">修改密码</button>
+      </fieldset>
+      <fieldset>
+        <legend>ServerChan sendkey</legend>
+        <p class="hint" id="sendkey-status-hint"></p>
+        <label>设置 / 更新 sendkey<input type="password" name="sendkey" placeholder="输入新的 sendkey（留空不修改）" autocomplete="off" /></label>
+        <button type="button" id="save-sendkey-btn" class="primary small">保存 sendkey</button>
+      </fieldset>
+      <fieldset>
+        <legend>飞书群通知 webhook（全局共享）</legend>
+        <p class="hint" id="feishu-status-hint"></p>
+        <p class="hint">飞书是一个群共享的机器人 webhook，每条提醒往群里只发一次（非每人各发）。任一登录用户均可修改。</p>
+        <label>设置 / 更新 webhook<input type="text" name="feishu_webhook" placeholder="https://open.feishu.cn/...（可在末尾加 #关键词）" autocomplete="off" /></label>
+        <button type="button" id="save-feishu-btn" class="primary small">保存 webhook</button>
+        <button type="button" id="clear-feishu-btn" class="small">清除 webhook</button>
+      </fieldset>
+      <menu class="actions">
+        <button value="close" class="primary">关闭</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script src="shared/cn_holidays.js?v=3"></script>
+  <script src="calendar/app.js?v=34"></script>
+</body>
+</html>

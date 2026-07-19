@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>任务进度管理</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="shared/base.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>任务进度管理</h1>
+      <p>选择要使用的工具</p>
+    </header>
+
+    <main class="home-content">
+      <div class="menu-grid">
+        <a href="calendar.html" class="menu-card">
+          <div class="menu-icon">📅</div>
+          <h3>日历待办</h3>
+          <p>按月/周/日管理待办事项，支持标签、颜色、跨天任务和时间轴</p>
+        </a>
+        <a href="gantt.html" class="menu-card">
+          <div class="menu-icon">📊</div>
+          <h3>任务甘特图</h3>
+          <p>按项目管理任务，支持前后置依赖、工期驱动自动排期、五档颗粒度</p>
+        </a>
+      </div>
+    </main>
+
+    <footer class="home-footer">
+      <p class="version-line" id="version-line"></p>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      fetch('/api/version').then(function (r) { return r.json(); }).then(function (j) {
+        var el = document.getElementById('version-line');
+        if (!el) return;
+        var v = (j && j.version) ? j.version : '';
+        el.textContent = v ? ('版本：' + v) : '';
+      }).catch(function () {});
+    })();
+  </script>
+</body>
+</html>

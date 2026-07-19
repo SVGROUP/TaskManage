@@ -1,0 +1,188 @@
+/* 任务甘特图样式 —— 2/7 : 5/7 分栏，sticky 表头，行对齐，SVG 连线层 */
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+:root {
+  --row-h: 36px;
+  --left-basis: 28.571%;
+  --border: #e2e8f0;
+  --bar: #4f46e5;
+  --bar-done: #22c55e;
+  --bar-warn: #ef4444;
+  --bar-idle: #9ca3af;   /* 未到启动时间：灰 */
+  --bar-active: #818cf8; /* 应已启动/进行中：稍浅的蓝 */
+  --bar-late: #f87171;   /* 超过截止日且未完成：浅红 */
+  --grid: #f1f5f9;
+  --text: #1e293b;
+  --muted: #64748b;
+  --head-bg: #f8fafc;
+  --accent: #4f46e5;
+}
+html, body {
+  margin: 0; height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--text);
+  background: #fff;
+}
+body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+/* 顶部工具栏 */
+.gantt-toolbar {
+  flex: 0 0 auto;
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 14px; border-bottom: 1px solid var(--border);
+  background: var(--head-bg); flex-wrap: wrap;
+}
+.gantt-toolbar h1 { font-size: 16px; margin: 0 8px 0 0; white-space: nowrap; }
+.gantt-toolbar .spacer { flex: 1 1 auto; }
+.gantt-toolbar select, .gantt-toolbar button, .gantt-toolbar input {
+  font-size: 13px; padding: 5px 10px;
+  border: 1px solid var(--border); border-radius: 6px;
+  background: #fff; color: var(--text); cursor: pointer;
+}
+.gantt-toolbar button:hover { background: #eef2ff; }
+.gantt-toolbar button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.gantt-toolbar button.primary:hover { background: #4338ca; }
+.gantt-toolbar .gran-switch button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.gantt-toolbar button#week-only-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.auth-status { font-size: 12px; color: var(--muted); }
+
+/* 主体 */
+.gantt-body { flex: 1 1 auto; display: flex; overflow: hidden; min-height: 0; }
+
+/* 左表 */
+.gantt-left {
+  flex: 0 0 var(--left-basis); max-width: var(--left-basis);
+  display: flex; flex-direction: column;
+  border-right: 2px solid var(--border);
+  overflow: hidden;
+}
+.gantt-left-head, .gantt-right-head {
+  flex: 0 0 auto; height: var(--row-h);
+  background: var(--head-bg); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 5;
+}
+.gantt-left-scroll { flex: 1 1 auto; overflow: auto; }
+.gantt-left-inner { min-width: 100%; }
+
+.left-table { border-collapse: collapse; width: 100%; table-layout: auto; white-space: nowrap; }
+.left-table col.c-seq   { width: 40px; }
+.left-table col.c-group { width: 80px; }
+.left-table col.c-title { width: 132px; }
+.left-table col.c-asgn  { width: 72px; }
+.left-table col.c-dur   { width: 48px; }
+.left-table col.c-done  { width: 48px; }
+.left-table col.c-pred  { width: 64px; }
+.left-table th, .left-table td {
+  height: var(--row-h); line-height: calc(var(--row-h) - 2px);
+  padding: 0 8px; border-bottom: 1px solid var(--grid); border-right: 1px solid var(--grid);
+  font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* 任务名称列：按最长内容完整显示（不截断） */
+.left-table th.h-title, .left-table td.c-title {
+  overflow: visible; text-overflow: clip; min-width: 132px;
+}
+.left-table th { background: var(--head-bg); font-weight: 600; color: var(--muted); position: sticky; top: 0; z-index: 6; }
+.left-table thead tr { position: sticky; top: 0; z-index: 6; }
+.left-table tr.sel td { background: #eef2ff; }
+.left-table td.num { text-align: center; color: var(--muted); }
+
+/* 任务分组 AB 交替底色：仅用于视觉分块，序号相邻+组名一致=同一块 */
+.left-table tr.shade-a td { background: #bfdbfe; }
+.left-table tr.shade-b td { background: #ffffff; }
+.left-table tr.sel.shade-a td, .left-table tr.sel.shade-b td { background: #eef2ff; }
+.left-table td.c-group { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.5px; }
+.left-table td.c-group.group-cont { color: transparent; }
+
+/* 可内联编辑单元格：双击进入编辑 */
+.left-table td.editable { cursor: text; position: relative; }
+.left-table td.editable:hover { background: #f8faff; box-shadow: inset 0 0 0 1px #c7d2fe; }
+.left-table td.seq-cell { cursor: pointer; }
+.left-table td.seq-cell:hover { color: var(--accent); }
+.left-table input.cell-edit {
+  width: 100%; height: calc(var(--row-h) - 8px); box-sizing: border-box;
+  border: 1px solid var(--accent); border-radius: 4px; padding: 0 6px;
+  font-size: 13px; font-family: inherit; color: var(--text); outline: none;
+  background: #fff;
+}
+
+/* 右侧甘特区 */
+.gantt-right { flex: 1 1 auto; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+.gantt-right-scroll { flex: 1 1 auto; overflow: auto; position: relative; }
+.timeline-head {
+  position: sticky; top: 0; z-index: 4; background: #fff;
+  border-bottom: 1px solid var(--border); height: var(--row-h);
+}
+.timeline-head svg { display: block; }
+.head-bg-fill { fill: #fff; }
+.row-shade-a { fill: #bfdbfe; }
+.gantt-canvas-wrap { position: relative; }
+.gantt-canvas-wrap svg.bars, .gantt-canvas-wrap svg.links, .gantt-canvas-wrap svg.bar-labels {
+  position: absolute; top: 0; left: 0;
+}
+svg.links { pointer-events: none; }
+svg.bar-labels { pointer-events: none; }
+
+.bar-rect { rx: 4; }
+/* 周末/假日背景带（参考日历配色） */
+.day-band.weekend { fill: #f1f5f9; }
+.day-band.holiday { fill: #fef2f2; }
+.bar-label { font-size: 13px; fill: #fff; dominant-baseline: middle; pointer-events: none; }
+/* 责任人名放条形末尾：黑色高对比，左对齐 */
+/* 责任人名放条形末尾：黑色高对比，左对齐，白色描边保证在连线上仍清晰 */
+.bar-label-end {
+  fill: #111827; font-weight: 600; text-anchor: start;
+  paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;
+}
+/* 半天分隔线与上/下标注 */
+.half-line { stroke: #e2e8f0; stroke-width: 1; stroke-dasharray: 2 2; }
+.half-label { font-size: 9px; fill: #cbd5e1; text-anchor: middle; }
+.grid-line { stroke: var(--grid); stroke-width: 1; }
+.grid-line.major { stroke: #cbd5e1; }
+.today-line { stroke: #f59e0b; stroke-width: 2; stroke-dasharray: 4 3; }
+.tick-label { font-size: 11px; fill: var(--muted); }
+.tick-label.major { font-weight: 600; fill: var(--text); }
+
+/* 空态 */
+.empty-hint {
+  flex: 1 1 auto; display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 14px; flex-direction: column; gap: 12px;
+}
+
+/* 弹窗 */
+.modal-mask {
+  position: fixed; inset: 0; background: rgba(15,23,42,.45);
+  display: flex; align-items: center; justify-content: center; z-index: 100;
+}
+.modal {
+  background: #fff; border-radius: 10px; width: 420px; max-width: 92vw;
+  max-height: 90vh; overflow: auto; box-shadow: 0 20px 50px rgba(0,0,0,.25);
+}
+.modal-head { padding: 14px 18px; border-bottom: 1px solid var(--border); font-size: 15px; font-weight: 600; }
+.modal-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+.modal-foot { padding: 12px 18px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 12px; color: var(--muted); }
+.field input, .field textarea, .field select {
+  font-size: 14px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; width: 100%;
+}
+.field .hint { font-size: 11px; color: var(--muted); }
+.field.row2 { flex-direction: row; gap: 10px; }
+.field.row2 > div { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.btn { font-size: 13px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 6px; background: #fff; cursor: pointer; }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn.danger { background: #fef2f2; color: var(--bar-warn); border-color: #fecaca; }
+.btn:hover { filter: brightness(.97); }
+.err-msg { color: var(--bar-warn); font-size: 12px; min-height: 14px; }
+.checkbox-row { display: flex; align-items: center; gap: 6px; }
+.checkbox-row input { width: auto; }
+
+/* 导入弹窗 tab */
+.imp-tabs { display: flex; gap: 6px; }
+.imp-tab {
+  flex: 1; font-size: 13px; padding: 7px 8px; border: 1px solid var(--border);
+  border-radius: 6px; background: #fff; color: var(--muted); cursor: pointer;
+}
+.imp-tab:hover { background: #f8faff; }
+.imp-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.imp-pane { display: flex; flex-direction: column; gap: 12px; }
+.imp-pane input[type="file"] { padding: 6px; cursor: pointer; }

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>任务甘特图</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="gantt/style.css?v=13" />
+</head>
+<body>
+  <div class="gantt-toolbar">
+    <h1>📊 任务甘特图</h1>
+    <select id="project-select" title="选择项目"></select>
+    <button id="new-project">＋项目</button>
+    <button id="edit-project" title="编辑当前项目">✎项目</button>
+    <button id="del-project" title="删除当前项目">🗑</button>
+    <span class="spacer"></span>
+    <div class="gran-switch" role="tablist">
+      <button data-gran="halfday">半天</button>
+      <button data-gran="day" class="active">日</button>
+      <button data-gran="week">周</button>
+      <button data-gran="month">月</button>
+      <button data-gran="quarter">季</button>
+      <button data-gran="year">年</button>
+    </div>
+    <button id="today-btn">今天</button>
+    <button id="week-only-btn" title="只看本周/下周相关任务（时间轴展示上周/本周/下周/下下周）">本周视图</button>
+    <select id="sort-select" title="排序方式">
+      <option value="seq">按序号</option>
+      <option value="assignee">按责任人</option>
+    </select>
+    <button id="new-task" class="primary">＋任务</button>
+    <button id="import-task">⬇导入</button>
+    <button id="export-csv" title="导出当前项目任务为 CSV（名称/责任人/开始时间/结束时间）">⬆CSV</button>
+    <button id="export-img" title="导出当前项目甘特图为 PNG 图片">🖼️图片</button>
+    <span class="spacer"></span>
+    <span id="auth-status" class="auth-status"></span>
+    <button id="account-btn" hidden>账户</button>
+    <button id="login-btn">登录</button>
+    <button id="logout-btn" hidden>登出</button>
+  </div>
+
+  <div class="gantt-body" id="gantt-body">
+    <!-- 左表 -->
+    <div class="gantt-left">
+      <div class="gantt-left-scroll" id="left-scroll">
+        <div class="gantt-left-inner">
+          <table class="left-table">
+            <colgroup>
+              <col class="c-seq" /><col class="c-group" /><col class="c-title" /><col class="c-asgn" />
+              <col class="c-dur" /><col class="c-done" /><col class="c-pred" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>#</th><th title="任务分组（仅用于视觉分块 AB行底色，不影响依赖/排期）">分组</th><th class="h-title">任务名称</th><th>责任人</th><th>工期</th><th>完成</th><th>前置</th>
+              </tr>
+            </thead>
+            <tbody id="left-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- 右侧甘特区 -->
+    <div class="gantt-right">
+      <div class="gantt-right-scroll" id="right-scroll">
+        <div class="timeline-head" id="timeline-head"></div>
+        <div class="gantt-canvas-wrap" id="canvas-wrap"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-hint" id="empty-hint" hidden>
+    <div>请选择或新建一个项目</div>
+  </div>
+
+  <div id="modal-root"></div>
+
+  <script src="shared/cn_holidays.js?v=1"></script>
+  <script src="gantt/app.js?v=19"></script>
+</body>
+</html>
