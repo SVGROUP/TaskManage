@@ -43,10 +43,10 @@
     "aarch64::web/index.html": "c54430277e0715eded7c6089926b8d47",
     "aarch64::web/gantt.html": "860b64146647242dc786c9250a639b4f",
     "aarch64::web/favicon.ico": "106e4291a927c3765ef2338ac4ed0818",
-    "aarch64::web/calendar.html": "7189591049696e3ec4e9c273befa2fd0",
+    "aarch64::web/calendar.html": "17df5566411f0c928c12412eacf80561",
     "aarch64::web/gantt/app.js": "664578c79b90b1839dccffa54d98cf0f",
     "aarch64::web/gantt/style.css": "529c9c9d134e71facb0c9b33cab54c78",
-    "aarch64::web/calendar/app.js": "db8cb6467621cbc762a3611cf54d762d",
+    "aarch64::web/calendar/app.js": "31ea020f8ce34b0bce47f528e9d75e6b",
     "aarch64::web/calendar/style.css": "a707e0d8a669974d21906478efdbe4bf",
     "aarch64::web/shared/base.css": "111e9365468f86724c3e64e7e9ca81b7",
     "aarch64::web/shared/cn_holidays.js": "55d26a8a344c53810ea75f8ca2cd92d2",
@@ -73,10 +73,10 @@
     "x86_64::web/index.html": "c54430277e0715eded7c6089926b8d47",
     "x86_64::web/gantt.html": "860b64146647242dc786c9250a639b4f",
     "x86_64::web/favicon.ico": "106e4291a927c3765ef2338ac4ed0818",
-    "x86_64::web/calendar.html": "7189591049696e3ec4e9c273befa2fd0",
+    "x86_64::web/calendar.html": "17df5566411f0c928c12412eacf80561",
     "x86_64::web/gantt/app.js": "664578c79b90b1839dccffa54d98cf0f",
     "x86_64::web/gantt/style.css": "529c9c9d134e71facb0c9b33cab54c78",
-    "x86_64::web/calendar/app.js": "db8cb6467621cbc762a3611cf54d762d",
+    "x86_64::web/calendar/app.js": "31ea020f8ce34b0bce47f528e9d75e6b",
     "x86_64::web/calendar/style.css": "a707e0d8a669974d21906478efdbe4bf",
     "x86_64::web/shared/base.css": "111e9365468f86724c3e64e7e9ca81b7",
     "x86_64::web/shared/cn_holidays.js": "55d26a8a344c53810ea75f8ca2cd92d2",
@@ -101,5 +101,5 @@
     "aarch64::release/taskmanage/common/__init__.py": "f388b0933c8b1d01ff05a7bed76d2da7",
     "aarch64::release/taskmanage/__init__.py": "70f03ad00007e6f44c4ecf9f822acaf0"
   },
-  "last_git_commit": "33322442328d4059ab7231627f6322e56c2f71ab"
+  "last_git_commit": "d6207afd1a0b99d6b3a7f9d1c4dfb21b626c3597"
 }
