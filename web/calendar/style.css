@@ -145,6 +145,11 @@ main {
 }
 .month .cell .pill.done { background: #f1f5f9; color: #000; text-decoration: line-through; }
 .month .cell .pill.priority { background: #fef3c7; color: #000; }
+/* 多选高亮 */
+li.multi-selected, .task-item.multi-selected {
+  background: #e3f2fd !important;
+  box-shadow: inset 2px 0 0 #2196f3;
+}
 /* 已完成任务：操作弹窗标题也加删除线 */
 #action-title.done { text-decoration: line-through; color: var(--muted); }
 .month .cell .more { color: var(--muted); }

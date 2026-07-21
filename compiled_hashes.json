@@ -46,8 +46,8 @@
     "aarch64::web/calendar.html": "17df5566411f0c928c12412eacf80561",
     "aarch64::web/gantt/app.js": "35bb6e4f3577968ec7e2584468281fbe",
     "aarch64::web/gantt/style.css": "2fadd7741ba139b43eb7c760dd292463",
-    "aarch64::web/calendar/app.js": "31ea020f8ce34b0bce47f528e9d75e6b",
-    "aarch64::web/calendar/style.css": "a707e0d8a669974d21906478efdbe4bf",
+    "aarch64::web/calendar/app.js": "677571d01d3aa312972d9af9a1863f74",
+    "aarch64::web/calendar/style.css": "a3f68a06b78dacce82e1e72df2ca01fb",
     "aarch64::web/shared/base.css": "111e9365468f86724c3e64e7e9ca81b7",
     "aarch64::web/shared/cn_holidays.js": "55d26a8a344c53810ea75f8ca2cd92d2",
     "aarch64::commit_file/commit.sh": "5f8c28b39895d8541738a33c2f987333",
@@ -76,8 +76,8 @@
     "x86_64::web/calendar.html": "17df5566411f0c928c12412eacf80561",
     "x86_64::web/gantt/app.js": "35bb6e4f3577968ec7e2584468281fbe",
     "x86_64::web/gantt/style.css": "2fadd7741ba139b43eb7c760dd292463",
-    "x86_64::web/calendar/app.js": "31ea020f8ce34b0bce47f528e9d75e6b",
-    "x86_64::web/calendar/style.css": "a707e0d8a669974d21906478efdbe4bf",
+    "x86_64::web/calendar/app.js": "677571d01d3aa312972d9af9a1863f74",
+    "x86_64::web/calendar/style.css": "a3f68a06b78dacce82e1e72df2ca01fb",
     "x86_64::web/shared/base.css": "111e9365468f86724c3e64e7e9ca81b7",
     "x86_64::web/shared/cn_holidays.js": "55d26a8a344c53810ea75f8ca2cd92d2",
     "x86_64::commit_file/commit.sh": "5f8c28b39895d8541738a33c2f987333",
@@ -99,8 +99,7 @@
     "aarch64::release/taskmanage/gantt/__init__.py": "db639a6270a336310d88972c48597d5a",
     "aarch64::release/taskmanage/calendar/__init__.py": "c2030f1131e03ece629444656950c744",
     "aarch64::release/taskmanage/common/__init__.py": "f388b0933c8b1d01ff05a7bed76d2da7",
-    "aarch64::release/taskmanage/__init__.py": "70f03ad00007e6f44c4ecf9f822acaf0",
-    "aarch64::release/taskmanage/gantt/routes.cpython-313-x86_64-linux-gnu.so": "b03977a2314ed89b6e5dc0b76e245288"
+    "aarch64::release/taskmanage/__init__.py": "70f03ad00007e6f44c4ecf9f822acaf0"
   },
-  "last_git_commit": "f1eeecc1ffa1549c6d2e23de62241a8973266822"
+  "last_git_commit": "24b617403c5df8487c4401d5e1949d4932f8f448"
 }
