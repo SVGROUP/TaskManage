@@ -175,19 +175,17 @@ button.mode-active {
   display: inline-block;
 }
 
-/* 链接列表 - 无卡片 */
+/* 链接列表 - 图标网格布局 */
 .links-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 8px 16px;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 20px;
 }
 
 .link-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  border-radius: 4px;
+  text-align: center;
+  padding: 12px 8px 8px;
+  border-radius: 8px;
   transition: background 0.15s;
   position: relative;
 }
@@ -198,17 +196,17 @@ button.mode-active {
 
 .link-item a {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 8px;
   text-decoration: none;
   color: inherit;
   flex: 1;
-  min-width: 0;
 }
 
 .link-icon {
-  width: 18px;
-  height: 18px;
+  width: 64px;
+  height: 64px;
   flex-shrink: 0;
   display: inline-block;
   object-fit: contain;
@@ -216,10 +214,11 @@ button.mode-active {
 }
 
 .link-title {
-  font-size: 14px;
+  font-size: 13px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 100%;
 }
 
 /* 链接操作图标 - 模式激活时显示 */
