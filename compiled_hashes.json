@@ -107,11 +107,11 @@
     "aarch64::web/nav.html": "9e5f6c504ea20e7b9b316895ba41b827",
     "aarch64::web/nav/app.js": "13ab0e52d6709c045ec995b3304ded9e",
     "aarch64::web/nav/style.css": "cec3d4f68e7ec1e7e0347f418a232151",
-    "x86_64::./taskmanage/nav/routes.py": "8f31323eba719fb880c741568fa8297d",
+    "x86_64::./taskmanage/nav/routes.py": "d164d24544dffd702c0306a1123bc3a5",
     "x86_64::./taskmanage/nav/auth.py": "be71f814885015a19961f58282422670",
-    "aarch64::./taskmanage/nav/routes.py": "8f31323eba719fb880c741568fa8297d",
+    "aarch64::./taskmanage/nav/routes.py": "d164d24544dffd702c0306a1123bc3a5",
     "aarch64::./taskmanage/nav/auth.py": "be71f814885015a19961f58282422670",
-    "aarch64::release/taskmanage/nav/routes.cpython-313-x86_64-linux-gnu.so": "e60b0f3d81f4087edad152272e142166"
+    "aarch64::release/taskmanage/nav/routes.cpython-313-x86_64-linux-gnu.so": "06461b5d99971effcabab5f5cc029fd2"
   },
-  "last_git_commit": "a1fe19a618aa8fa332ff7f514e4d6af0ef724baf"
+  "last_git_commit": "f882504b556e85a81e2954b2ff5cfc964e34142a"
 }
