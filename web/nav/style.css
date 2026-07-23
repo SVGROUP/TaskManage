@@ -99,25 +99,35 @@ button[data-mode="delete"].mode-active {
   border-color: #1890ff;
 }
 
-/* 字体大小：中=默认，±6px */
+/* 字体大小：小=12px，中=14px，大=16px */
 body.font-sm .link-title {
-  font-size: calc(13px - 2px);
+  font-size: 12px;
 }
 body.font-sm .nav-toolbar h1 {
-  font-size: calc(18px - 6px);
+  font-size: 17px;
 }
 body.font-sm .category-header {
-  font-size: calc(16px - 4px);
+  font-size: 15px;
+}
+
+body.font-md .link-title {
+  font-size: 14px;
+}
+body.font-md .nav-toolbar h1 {
+  font-size: 19px;
+}
+body.font-md .category-header {
+  font-size: 17px;
 }
 
 body.font-lg .link-title {
-  font-size: calc(13px + 6px);
+  font-size: 16px;
 }
 body.font-lg .nav-toolbar h1 {
-  font-size: calc(18px + 6px);
+  font-size: 21px;
 }
 body.font-lg .category-header {
-  font-size: calc(16px + 4px);
+  font-size: 19px;
 }
 
 .mode-btn {
