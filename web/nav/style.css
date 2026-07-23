@@ -175,6 +175,17 @@ button.mode-active {
   display: inline-block;
 }
 
+/* 选中高亮 */
+.link-selected {
+  background: #e6f7ff !important;
+  border: 1px solid #40a9ff;
+}
+
+.link-selected .link-title {
+  font-weight: 600;
+  color: #1890ff;
+}
+
 /* 链接列表 - 图标网格布局 */
 .links-list {
   display: grid;
