@@ -43,10 +43,10 @@
     "aarch64::web/index.html": "19fa60dd1864195dfb48aa046c560557",
     "aarch64::web/gantt.html": "85ca964d4e5341640f33a9c62ead1f8f",
     "aarch64::web/favicon.ico": "106e4291a927c3765ef2338ac4ed0818",
-    "aarch64::web/calendar.html": "34103958043c843f59decfbebdeae0b0",
+    "aarch64::web/calendar.html": "fed0a7bf7a16106c6b525d38827ac8ec",
     "aarch64::web/gantt/app.js": "35bb6e4f3577968ec7e2584468281fbe",
     "aarch64::web/gantt/style.css": "2fadd7741ba139b43eb7c760dd292463",
-    "aarch64::web/calendar/app.js": "6a81c9be0c2783093f4e1bcdf1a8ee5c",
+    "aarch64::web/calendar/app.js": "5396ed36ddc55431d8187c1548ce46d5",
     "aarch64::web/calendar/style.css": "12393d0bb216e19cf8fa8deba0b0e381",
     "aarch64::web/shared/base.css": "111e9365468f86724c3e64e7e9ca81b7",
     "aarch64::web/shared/cn_holidays.js": "55d26a8a344c53810ea75f8ca2cd92d2",
@@ -73,10 +73,10 @@
     "x86_64::web/index.html": "19fa60dd1864195dfb48aa046c560557",
     "x86_64::web/gantt.html": "85ca964d4e5341640f33a9c62ead1f8f",
     "x86_64::web/favicon.ico": "106e4291a927c3765ef2338ac4ed0818",
-    "x86_64::web/calendar.html": "34103958043c843f59decfbebdeae0b0",
+    "x86_64::web/calendar.html": "fed0a7bf7a16106c6b525d38827ac8ec",
     "x86_64::web/gantt/app.js": "35bb6e4f3577968ec7e2584468281fbe",
     "x86_64::web/gantt/style.css": "2fadd7741ba139b43eb7c760dd292463",
-    "x86_64::web/calendar/app.js": "6a81c9be0c2783093f4e1bcdf1a8ee5c",
+    "x86_64::web/calendar/app.js": "5396ed36ddc55431d8187c1548ce46d5",
     "x86_64::web/calendar/style.css": "12393d0bb216e19cf8fa8deba0b0e381",
     "x86_64::web/shared/base.css": "111e9365468f86724c3e64e7e9ca81b7",
     "x86_64::web/shared/cn_holidays.js": "55d26a8a344c53810ea75f8ca2cd92d2",
@@ -112,5 +112,5 @@
     "aarch64::./taskmanage/nav/routes.py": "b443557943e16793b236e53e7f60d5b0",
     "aarch64::./taskmanage/nav/auth.py": "be71f814885015a19961f58282422670"
   },
-  "last_git_commit": "852077f1758ee6a0ffef34340d36986fd9a23e05"
+  "last_git_commit": "54151dfacd7af02a246c15ed29a30875e897a8fa"
 }
