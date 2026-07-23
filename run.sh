@@ -4,7 +4,7 @@
 APP_DIR=/TaskManage
 PORT="${PORT:-50010}"
 UPGRADE_BLOCKED_FLAG="${UPGRADE_BLOCKED_FLAG:-$APP_DIR/upgrade_blocked}"
-UPGRADE_TAG="${UPGRADE_TAG:-TaskManage}"
+UPGRADE_TAG="${UPGRADE_TAG:-TASK}"
 UPGRADE_BASE_URL="${UPGRADE_BASE_URL:-http://atut.efdata.fun:45678/sv/auth/api}"
 
 select_best_remote() {
