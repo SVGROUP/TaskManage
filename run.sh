@@ -145,7 +145,7 @@ restart_app() {
 
 if ! git remote | grep -q "^gitee$"; then
     echo "gitee remote not found, adding..."
-    git remote add gitee https://gitee.com/svtool/TaskManage.git
+    git remote add gitee https://gitee.com/SVGROUP/TASK.git
 fi
 
 # 首次启动：拉最新代码 + 校验 hash 一致才启动。
