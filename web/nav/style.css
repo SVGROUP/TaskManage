@@ -270,16 +270,16 @@ body.font-lg .category-header {
   color: #1890ff;
 }
 
-/* 链接列表 - 图标网格布局 */
+/* 链接列表 - 自适应网格：一行尽量多放 */
 .links-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 16px 8px;
 }
 
 .link-item {
   text-align: center;
-  padding: 12px 8px 8px;
+  padding: 12px 4px 8px;
   border-radius: 8px;
   transition: background 0.15s;
   position: relative;
