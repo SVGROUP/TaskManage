@@ -171,7 +171,7 @@ while true; do
     fi
     # 事件驱动：$APP_DIR/upgrade 一被创建立即唤醒；无 inotify 则退回短 sleep。
     if command -v inotifywait >/dev/null 2>&1; then
-        inotifywait -qq -t 300 -e create -e moved_to "$APP_DIR/" 2>/dev/null || sleep 5
+        inotifywait -qq -t 300 -e create -e modify -e moved_to "$APP_DIR/" 2>/dev/null || sleep 5
     else
         sleep 10
     fi
