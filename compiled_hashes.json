@@ -56,7 +56,7 @@
     "aarch64::frontend-build/build.js": "42034df8e46c807fc95c27a842d10813",
     "x86_64::./taskmanage/logging.py": "06e7d3cfffb491b454abc95dc3da4a81",
     "x86_64::./taskmanage/gantt/auth.py": "84981fca9e2aaf31890ce0442304bcba",
-    "x86_64::./taskmanage/upgrade.py": "2cb736b4253738b9f4e95b9ba402033e",
+    "x86_64::./taskmanage/upgrade.py": "2eb39065df53b5c6337f2136cba103d1",
     "x86_64::./taskmanage/feishu.py": "7b7ae9a4ea67f51810ce127c3522bf19",
     "x86_64::./taskmanage/config.py": "ec311a41b56bc3e31f9bd11442e73815",
     "x86_64::./taskmanage/notifier.py": "4b3fa79c54e42f50011944f9dbaf4b9e",
@@ -86,7 +86,7 @@
     "x86_64::frontend-build/build.js": "42034df8e46c807fc95c27a842d10813",
     "aarch64::./taskmanage/logging.py": "06e7d3cfffb491b454abc95dc3da4a81",
     "aarch64::./taskmanage/gantt/auth.py": "84981fca9e2aaf31890ce0442304bcba",
-    "aarch64::./taskmanage/upgrade.py": "2cb736b4253738b9f4e95b9ba402033e",
+    "aarch64::./taskmanage/upgrade.py": "2eb39065df53b5c6337f2136cba103d1",
     "aarch64::./taskmanage/feishu.py": "7b7ae9a4ea67f51810ce127c3522bf19",
     "aarch64::./taskmanage/config.py": "ec311a41b56bc3e31f9bd11442e73815",
     "aarch64::./taskmanage/notifier.py": "4b3fa79c54e42f50011944f9dbaf4b9e",
@@ -110,7 +110,8 @@
     "x86_64::./taskmanage/nav/routes.py": "b443557943e16793b236e53e7f60d5b0",
     "x86_64::./taskmanage/nav/auth.py": "be71f814885015a19961f58282422670",
     "aarch64::./taskmanage/nav/routes.py": "b443557943e16793b236e53e7f60d5b0",
-    "aarch64::./taskmanage/nav/auth.py": "be71f814885015a19961f58282422670"
+    "aarch64::./taskmanage/nav/auth.py": "be71f814885015a19961f58282422670",
+    "aarch64::release/taskmanage/upgrade.cpython-313-x86_64-linux-gnu.so": "ea0564628de5303af187b7391cec4003"
   },
-  "last_git_commit": "14c1c79fe3e639a58d539d77cafbbfda532cf441"
+  "last_git_commit": "bd4eab191a0fed3e20f4cdcadac9b112a10968a5"
 }
